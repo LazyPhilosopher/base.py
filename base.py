@@ -2,8 +2,8 @@ input               = {}
 dots_indexes        = []
 
 base                = 16                    #int(input())
-input[0]            = "0123456.789aBcDef"    #input() #first operand
-input[1]            = "12345.acdf"           #input() #summarised operand
+input[0]            = "0000123456.789aBcDef"    #input() #first operand
+input[1]            = "12345.acdf00000000"           #input() #summarised operand
 input[2]            = "1545.60AcdF"          #input() #subtracted operand
 
 def system_check(system, number):
@@ -24,19 +24,8 @@ def system_check(system, number):
     if(dots > 1):
         failure = 1
     return failure
-           
-failed = 0
-
-for i in range(len(input)):
-    failed = system_check(base, input[i])
-    if(failed):
-        break
-
-
-if(failed):
-    print("ERROR")
-
-else:
+    
+def sum_operation():
     sum_1 = []
     sum_2 = []
     result= []
@@ -100,11 +89,44 @@ else:
         else:
             result.insert(0, '.')
 
-        
-    print(sum_1)
-    print(sum_2)
-    print(result)
-    print(dots_indexes)
+    output = ''
+    return output.join(str(x) for x in result)
+
+def side_zeros_check(argument):
+    result_left = []
+    result_right = []
+
+    only_zeros = 1
+    for i in range (len(argument)):
+        if(argument[i] != '0' or only_zeros != 1):
+            only_zeros = 0
+            result_left.insert(len(argument), argument[i])
+
+    only_zeros = 1
+    for i in range (len(result_left)):
+        if(result_left[len(result_left) - i - 1] != '0' or only_zeros != 1):
+            only_zeros = 0
+            result_right.insert(0, result_left[len(result_left) - i - 1])
+
+    output = '' 
+    print(output.join(str(x) for x in result_right))
+
+
+
+failed = 0
+
+
+for i in range(len(input)):
+    failed = system_check(base, input[i])
+    if(failed):
+        break
+if(failed):
+    print("ERROR")
+
+else:
+    sum = sum_operation()
+    side_zeros_check(sum)
+    #print(dots_indexes)
 
 
 
